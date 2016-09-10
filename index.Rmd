@@ -39,12 +39,79 @@ library(maps)
 
 ```
 
+###Map
 ```{r, data load & maps}
 data<-read.csv("telemetry.review.csv")
 str(data)
-head(data)
 world<-map_data("world")
-map<-ggplot() + geom_polygon(data=world, aes(x=long, y=lat, group=group))
+map<-ggplot() + geom_polygon(data=world, colour="gray50", fill="gray50", aes(x=long, y=lat, group=group))
 map + geom_point(data=data, aes(x=long, y=lat), color="green")
 
+#count up country frequencies
+countries<-data %>% group_by(country) %>% summarise(n=n())
+countries
+qplot(country, n, geom="boxplot", data=data, xlab="country", ylab="count")
+
+c1<-chisq.test(countries$country, countries$n, simulate.p.value = TRUE, B = 10000)
+c1
+
+```
+
+###Hypotheses
+```{r, hypotheses}
+#main H
+qplot(main.H, data=data, xlab="main hypothesis")
+#count up
+main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())
+main.hypotheses
+
+c2<-chisq.test(main.hypotheses$n, simulate.p.value = TRUE, B = 10000)
+c2
+
+#secondary H
+qplot(secondary.H, data=data, xlab="secondary hypothesis")
+#count up
+secondary.hypotheses<-data %>% group_by(secondary.H) %>% summarise(n=n())
+secondary.hypotheses
+
+c3<-chisq.test(secondary.hypotheses$n, simulate.p.value = TRUE, B = 10000)
+c3
+
+#frequency of multiple H tested
+qplot(as.factor(number.H.test), data=data, xlab="number of hypotheses tested")
+#count up
+number.H<-data %>% group_by(as.factor(number.H.test)) %>% summarise(n=n())
+number.H
+c4<-chisq.test(number.H$n, simulate.p.value = TRUE, B = 10000)
+c4
+```
+
+###Taxa
+```{r, taxa}
+#freq of different taxa
+qplot(target.taxa, data=data, xlab="taxa tested")
+
+#count up
+taxa<-data %>% group_by(target.taxa) %>% summarise(n=n())
+taxa
+
+c5<-chisq.test(taxa$n, simulate.p.value = TRUE, B = 10000)
+c5
+
+```
+
+###Replication
+```{r, sampling effort}
+#extent of replication of individual animals
+qplot(main.H, n, geom="boxplot", data=data, xlab="hypothesis", ylab="number of individuals")
+
+#GLM for differences
+m1<-glm(n~main.H, family=gaussian, data=data)
+anova(m1, test="Chisq")
+
+```
+
+###Device
+```{r, device}
+qplot(device, data=data, xlab="device")
 ```

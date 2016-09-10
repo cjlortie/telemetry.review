@@ -1,0 +1,50 @@
+---
+title:
+author: "cjlortie & taylor noble"
+date: "Sept 2016"
+output:
+  html_document:
+    theme: yeti
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+#A systematic review of telemetry as an ecological research tool in deserts.
+
+###Purpose
+To describe ecological use patterns of telemetry in desert ecosystems.
+
+
+![](./taylor.action.jpg)
+
+[ecoblender](http://ecoblender.org)
+
+###Methods
+A systematic review of telemetry studies in deserts. A formalized synthesis of all research using telemetry in deserts.
+
+Keyword search on Web of Science only: telemetry and desert, or radio tracking and desert Collaborators: Taylor Noble.
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE)
+#library loads ####
+library(dplyr)
+#library(lme4)
+#library(lattice)
+#library(latticeExtra)
+library(rgdal)
+library(ggplot2)
+library(maps)
+
+```
+
+```{r, data load & maps}
+data<-read.csv("telemetry.review.csv")
+str(data)
+head(data)
+world<-map_data("world")
+map<-ggplot() + geom_polygon(data=world, aes(x=long, y=lat, group=group))
+map + geom_point(data=data, aes(x=long, y=lat), color="green")
+
+```

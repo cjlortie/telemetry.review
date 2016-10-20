@@ -50,10 +50,15 @@ map + geom_point(data=data, aes(x=long, y=lat), color="green")
 
 #count up country frequencies
 countries<-data %>% group_by(country) %>% summarise(n=n())
-
+#countries<-data %>% group_by(country) %>% tally(n) #tally is same as above code
 countries
+countries <- countries %>% filter(n > 2)
 
-qplot(country, n, geom="boxplot", data=data, xlab="country", ylab="count")
+qplot(country, n, geom="boxplot", data=data, xlab="country", ylab="count") + coord_flip()
+
+p2<-ggplot(countries) + geom_bar(mapping = aes(country, sort(n)), stat = "identity")
+p2
+
 
 c1<-chisq.test(countries$country, countries$n, simulate.p.value = TRUE, B = 10000)
 c1

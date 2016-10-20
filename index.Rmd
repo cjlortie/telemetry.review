@@ -41,7 +41,7 @@ library(maps)
 
 ###Map
 ```{r, data load & maps}
-data<-read.csv("telemetry.review.csv")
+data<-read.csv("data/telemetry.review.csv")
 str(data)
 #mapping in ggplot2 lat-long must be in decimal degrees
 world<-map_data("world")

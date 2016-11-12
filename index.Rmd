@@ -71,20 +71,22 @@ c1
 ###Hypotheses
 ```{r, hypotheses}
 #main H
-#count up
+#main H correctly plotted
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_discrete(name="Target taxa")
+
 main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())
 main.hypotheses
-ggplot(main.hypotheses) + geom_bar(mapping = aes(main.H, sort(n)), stat = "identity") + xlab("Main hypothesis") + ylab("Frequency")
-
 c2<-chisq.test(main.hypotheses$n, simulate.p.value = TRUE, B = 10000)
 c2
 
 #secondary H
-qplot(secondary.H, data=data, xlab="secondary hypothesis")
-#count up
+ggplot(data, aes(secondary.H, na.rm = TRUE)) + geom_bar(stat = "count") + xlab("Secondary hypothesis") + ylab("Frequency")
+
 secondary.hypotheses<-data %>% group_by(secondary.H) %>% summarise(n=n())
 secondary.hypotheses
-
 c3<-chisq.test(secondary.hypotheses$n, simulate.p.value = TRUE, B = 10000)
 c3
 
@@ -114,7 +116,8 @@ c5
 ###Replication
 ```{r, sampling effort}
 #extent of replication of individual animals
-qplot(main.H, n, geom="boxplot", data=data, xlab="hypothesis", ylab="number of individuals")
+qplot(main.H, n, geom="boxplot", data=data, xlab="Hypothesis", ylab="Number of individuals")
+
 
 #GLM for differences
 m1<-glm(n~main.H, family=gaussian, data=data)

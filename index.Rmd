@@ -50,6 +50,9 @@ map<-ggplot() + geom_polygon(data=world, colour="gray50", fill="gray50", aes(x=l
   ylab("Latitude")
 map + geom_point(data=data, aes(x=long, y=lat), color="green")
 
+#map again in bw
+map + geom_point(data=data, aes(x=long, y=lat), color="black")
+
 #count up country frequencies
 countries<-data %>% group_by(country) %>% summarise(n=n())
 #countries<-data %>% group_by(country) %>% tally(n) #tally is same as above code
@@ -72,10 +75,24 @@ c1
 ```{r, hypotheses}
 #main H
 #main H correctly plotted
+#classic 
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
   scale_fill_discrete(name="Target taxa")
+
+#brewer
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Device")
+
+#grey
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_grey(start = 0, end = .9) + theme_bw()
+
 
 main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())
 main.hypotheses
@@ -129,8 +146,16 @@ anova(m1, test="Chisq")
 ```{r, device}
 qplot(device, data=data, xlab="device")
 
+#in full color
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
+
+#in grey
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Device") +
+scale_fill_grey(start = 0.5, end = .9) + theme_bw()
 ```

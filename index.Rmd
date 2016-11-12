@@ -45,7 +45,9 @@ data<-read.csv("data/telemetry.review.csv")
 str(data)
 #mapping in ggplot2 lat-long must be in decimal degrees
 world<-map_data("world")
-map<-ggplot() + geom_polygon(data=world, colour="gray50", fill="gray50", aes(x=long, y=lat, group=group))
+map<-ggplot() + geom_polygon(data=world, colour="gray50", fill="gray50", aes(x=long, y=lat, group=group)) + 
+  xlab("Longitude") +
+  ylab("Latitude")
 map + geom_point(data=data, aes(x=long, y=lat), color="green")
 
 #count up country frequencies
@@ -54,10 +56,11 @@ countries<-data %>% group_by(country) %>% summarise(n=n())
 countries
 countries <- countries %>% filter(n > 2)
 
-qplot(country, n, geom="boxplot", data=data, xlab="country", ylab="count") + coord_flip()
+qplot(country, n, geom="boxplot", data=data, xlab="Country", ylab="Frequency") +
+  coord_flip()
 
 p2<-ggplot(countries) + geom_bar(mapping = aes(country, sort(n)), stat = "identity")
-p2
+#p2
 
 
 c1<-chisq.test(countries$country, countries$n, simulate.p.value = TRUE, B = 10000)
@@ -68,10 +71,10 @@ c1
 ###Hypotheses
 ```{r, hypotheses}
 #main H
-qplot(main.H, data=data, xlab="main hypothesis")
 #count up
 main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())
 main.hypotheses
+ggplot(main.hypotheses) + geom_bar(mapping = aes(main.H, sort(n)), stat = "identity") + xlab("Main hypothesis") + ylab("Frequency")
 
 c2<-chisq.test(main.hypotheses$n, simulate.p.value = TRUE, B = 10000)
 c2

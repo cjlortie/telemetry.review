@@ -128,6 +128,11 @@ taxa
 c5<-chisq.test(taxa$n, simulate.p.value = TRUE, B = 10000)
 c5
 
+#did they test other taxa
+ggplot(data) + geom_freqpoly(aes(other.taxa))
+other.taxa<-data %>% group_by(other.taxa) %>% summarise(n=n())
+other.taxa
+
 ```
 
 ###Replication
@@ -158,4 +163,25 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count"
   ylab("Frequency") +
   scale_fill_brewer(name="Device") +
 scale_fill_grey(start = 0.5, end = .9) + theme_bw()
+```
+
+###Scale
+```{r, scale}
+#did they test other taxa
+ggplot(data) + geom_bar(aes(scale, stat="count"))
+scale<-data %>% group_by(scale) %>% summarise(n=n())
+scale
+
+#complex plot
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= scale), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Scale")
+
+#in grey
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= scale), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Scale") +
+  scale_fill_grey(start = 0, end = .9) + theme_bw()
 ```

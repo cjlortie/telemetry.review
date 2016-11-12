@@ -128,4 +128,9 @@ anova(m1, test="Chisq")
 ###Device
 ```{r, device}
 qplot(device, data=data, xlab="device")
+
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Device")
 ```

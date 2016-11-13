@@ -57,7 +57,6 @@ map + geom_point(data=data, aes(x=long, y=lat), color="black")
 
 #count up country frequencies
 countries<-data %>% group_by(country) %>% summarise(n=n())
-#countries<-data %>% group_by(country) %>% tally(n) #tally is same as above code
 countries
 countries <- countries %>% filter(n > 2)
 

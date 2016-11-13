@@ -29,19 +29,18 @@ Keyword search on Web of Science only: telemetry and desert, or radio tracking a
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(cache=TRUE)
 #library loads ####
-library(dplyr)
+library(tidyverse)
 #library(lme4)
 #library(lattice)
 #library(latticeExtra)
 library(rgdal)
-library(ggplot2)
 library(maps)
 
 ```
 
 ###Map
 ```{r, data load & maps}
-data<-read.csv("data/telemetry.review.csv")
+data<-read_csv("data/telemetry.review.csv")
 str(data)
 #mapping in ggplot2 lat-long must be in decimal degrees
 world<-map_data("world")
@@ -161,8 +160,7 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count"
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
-  scale_fill_brewer(name="Device") +
-scale_fill_grey(start = 0.5, end = .9) + theme_bw()
+  scale_fill_grey(name= "Device", start = 0.5, end = .9) + theme_bw()
 ```
 
 ###Scale
@@ -172,7 +170,7 @@ ggplot(data) + geom_bar(aes(scale, stat="count"))
 scale<-data %>% group_by(scale) %>% summarise(n=n())
 scale
 
-#complex plot
+#layered plot
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= scale), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
@@ -182,6 +180,39 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= scale), stat = "count")
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= scale), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
-  scale_fill_brewer(name="Scale") +
-  scale_fill_grey(start = 0, end = .9) + theme_bw()
+  scale_fill_grey(name = "Scale", start = 0, end = .9) + theme_bw()
+```
+
+###Risk status
+```{r, risk status}
+ggplot(data) + geom_bar(aes(risk.status, stat="count"))
+risk.status<-data %>% group_by(risk.status) %>% summarise(n=n())
+risk.status
+
+#layered plot
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= risk.status), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Risk status")
+
+#in grey
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= risk.status), stat = "count") + 
+  xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_grey(name = "Risk status", start = 0, end = .9) + theme_bw()
+
+```
+
+###Duration
+```{r, duration}
+#ggplot(data) +geom_histogram(aes(duration.in.days))
+ggplot(data) +geom_boxplot(aes(main.H, `duration in days`)) + 
+  xlab("Hypothesis") +
+  ylab("Duration (in days)")
+
+duration<-data %>% group_by(`duration in days`) %>% summarise(n=n())
+duration
+
+c6<-chisq.test(duration$n, simulate.p.value = TRUE, B = 10000)
+c6
 ```

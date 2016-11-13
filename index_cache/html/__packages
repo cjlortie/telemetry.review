@@ -4,3 +4,8 @@ sp
 rgdal
 ggplot2
 maps
+tidyverse
+tibble
+tidyr
+readr
+purrr

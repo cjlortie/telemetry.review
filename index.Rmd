@@ -86,13 +86,13 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "c
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
-  scale_fill_brewer(name="Device")
+  scale_fill_brewer(name="Target taxa")
 
 #grey
 ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
   xlab("Hypothesis") + 
   ylab("Frequency") +
-  scale_fill_grey(start = 0, end = .9) + theme_bw()
+  scale_fill_grey(name="Target taxa", start = 0, end = .9) + theme_bw()
 
 
 main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())

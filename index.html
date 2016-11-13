@@ -235,7 +235,8 @@ div.tocify {
 </div>
 <div id="map" class="section level3">
 <h3>Map</h3>
-<pre class="r"><code>data&lt;-read_csv(&quot;data/telemetry.review.csv&quot;)</code></pre>
+<pre class="r"><code>#simple data load
+data&lt;-read_csv(&quot;data/telemetry.review.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   rep = col_integer(),
@@ -256,64 +257,25 @@ div.tocify {
 ##   risk.status = col_character(),
 ##   `duration in days` = col_integer()
 ## )</code></pre>
-<pre class="r"><code>str(data)</code></pre>
-<pre><code>## Classes 'tbl_df', 'tbl' and 'data.frame':    97 obs. of  17 variables:
-##  $ rep                             : int  1 2 3 4 5 6 7 8 9 10 ...
-##  $ year                            : int  2016 2009 2012 2007 2007 2014 2010 2009 2013 2014 ...
-##  $ observational                   : int  1 1 1 1 1 1 1 1 1 1 ...
-##  $ main.H                          : chr  &quot;behavior&quot; &quot;behavior&quot; &quot;habitat use&quot; &quot;methodological&quot; ...
-##  $ secondary.H                     : chr  &quot;thermoregulation&quot; &quot;thermoregulation&quot; &quot;species interactions&quot; NA ...
-##  $ number.H.test                   : int  2 2 2 NA 1 1 1 1 2 2 ...
-##  $ target.taxa                     : chr  &quot;small mammal&quot; &quot;bird&quot; &quot;large mammal&quot; &quot;bird&quot; ...
-##  $ other.taxa                      : int  0 0 1 0 0 0 0 0 0 0 ...
-##  $ total number of species in study: int  1 1 3 1 1 1 1 1 1 2 ...
-##  $ n                               : int  10 142 5 9 77 20 13 25 8 3 ...
-##  $ device                          : chr  &quot;vhf&quot; &quot;vhf&quot; &quot;gps&quot; &quot;vhf&quot; ...
-##  $ scale                           : chr  &quot;local&quot; &quot;regional&quot; &quot;local&quot; &quot;local&quot; ...
-##  $ country                         : chr  &quot;Qatar&quot; &quot;Spain&quot; &quot;Mexico&quot; &quot;Mauritania&quot; ...
-##  $ lat                             : num  25.8 39.5 25.8 21 36.6 ...
-##  $ long                            : num  51.2 -2 -103.8 -10.9 -104.5 ...
-##  $ risk.status                     : chr  &quot;least concern&quot; &quot;vulnerable&quot; &quot;least concern&quot; &quot;least concern&quot; ...
-##  $ duration in days                : int  4 3240 62 9 1080 21 NA 2880 55 3 ...
-##  - attr(*, &quot;spec&quot;)=List of 2
-##   ..$ cols   :List of 17
-##   .. ..$ rep                             : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ year                            : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ observational                   : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ main.H                          : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ secondary.H                     : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ number.H.test                   : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ target.taxa                     : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ other.taxa                      : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ total number of species in study: list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ n                               : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   .. ..$ device                          : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ scale                           : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ country                         : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ lat                             : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
-##   .. ..$ long                            : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_double&quot; &quot;collector&quot;
-##   .. ..$ risk.status                     : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_character&quot; &quot;collector&quot;
-##   .. ..$ duration in days                : list()
-##   .. .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_integer&quot; &quot;collector&quot;
-##   ..$ default: list()
-##   .. ..- attr(*, &quot;class&quot;)= chr  &quot;collector_guess&quot; &quot;collector&quot;
-##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</code></pre>
+<pre class="r"><code>#str(data)
+data</code></pre>
+<pre><code>## # A tibble: 97 × 17
+##      rep  year observational         main.H          secondary.H
+##    &lt;int&gt; &lt;int&gt;         &lt;int&gt;          &lt;chr&gt;                &lt;chr&gt;
+## 1      1  2016             1       behavior     thermoregulation
+## 2      2  2009             1       behavior     thermoregulation
+## 3      3  2012             1    habitat use species interactions
+## 4      4  2007             1 methodological                 &lt;NA&gt;
+## 5      5  2007             1   demographics                 &lt;NA&gt;
+## 6      6  2014             1       behavior                 &lt;NA&gt;
+## 7      7  2010             1    habitat use                 &lt;NA&gt;
+## 8      8  2009             1    habitat use                 &lt;NA&gt;
+## 9      9  2013             1       behavior     thermoregulation
+## 10    10  2014             1     physiology             behavior
+## # ... with 87 more rows, and 12 more variables: number.H.test &lt;int&gt;,
+## #   target.taxa &lt;chr&gt;, other.taxa &lt;int&gt;, `total number of species in
+## #   study` &lt;int&gt;, n &lt;int&gt;, device &lt;chr&gt;, scale &lt;chr&gt;, country &lt;chr&gt;,
+## #   lat &lt;dbl&gt;, long &lt;dbl&gt;, risk.status &lt;chr&gt;, `duration in days` &lt;int&gt;</code></pre>
 <pre class="r"><code>#mapping in ggplot2 lat-long must be in decimal degrees
 world&lt;-map_data(&quot;world&quot;)
 map&lt;-ggplot() + geom_polygon(data=world, colour=&quot;gray50&quot;, fill=&quot;gray50&quot;, aes(x=long, y=lat, group=group)) + 

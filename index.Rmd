@@ -41,7 +41,7 @@ library(maps)
 ###Map
 ```{r, data load & maps}
 #simple data load
-data<-read_csv("data/telemetry.review.csv")
+data<-read_csv("data/telemetry review.csv")
 #str(data)
 data
 
@@ -163,6 +163,12 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count"
   xlab("Hypothesis") + 
   ylab("Frequency") +
   scale_fill_grey(name= "Device", start = 0.5, end = .9) + theme_bw()
+
+device<-data %>% group_by(device) %>% count(device)
+device
+c<-chisq.test(device$nn, simulate.p.value = TRUE, B = 10000)
+c
+
 ```
 
 ###Scale

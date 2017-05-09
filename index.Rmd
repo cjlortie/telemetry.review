@@ -141,6 +141,7 @@ other.taxa
 #extent of replication of individual animals
 qplot(main.H, n, geom="boxplot", data=data, xlab="Hypothesis", ylab="Number of individuals")
 
+ggplot(data, aes(main.H, n)) + geom_boxplot() + xlab("Hypothesis") + ylab("Number of individuals") + ylim(0,100)
 
 #GLM for differences
 m1<-glm(n~main.H, family=gaussian, data=data)

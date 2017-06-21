@@ -83,16 +83,16 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "c
   scale_fill_discrete(name="Target taxa")
 
 #brewer
-ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
-  xlab("Hypothesis") + 
-  ylab("Frequency") +
-  scale_fill_brewer(name="Target taxa")
+#ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
+  #xlab("Hypothesis") + 
+  #ylab("Frequency") +
+  #scale_fill_brewer(name="Target taxa")
 
 #grey
-ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
-  xlab("Hypothesis") + 
-  ylab("Frequency") +
-  scale_fill_grey(name="Target taxa", start = 0, end = .9) + theme_bw()
+#ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= target.taxa), stat = "count") + 
+  #xlab("Hypothesis") + 
+  #ylab("Frequency") +
+  #scale_fill_grey(name="Target taxa", start = 0, end = .9) + theme_bw()
 
 
 main.hypotheses<-data %>% group_by(main.H) %>% summarise(n=n())
@@ -122,12 +122,22 @@ c4
 #freq of different taxa
 qplot(target.taxa, data=data, xlab="taxa tested")
 
+ggplot(data, aes(year, fill = target.taxa)) + geom_bar() + ylab("Frequency") + xlab("Year") +
+  scale_fill_discrete(name="Target taxa")
+
 #count up
 taxa<-data %>% group_by(target.taxa) %>% summarise(n=n())
 taxa
 
 c5<-chisq.test(taxa$n, simulate.p.value = TRUE, B = 10000)
 c5
+
+#redo taxa by year
+taxa<-data %>% group_by(year, target.taxa) %>% summarise(n=n())
+taxa
+
+m <- glm(n~target.taxa %in% year, family = "poisson", data = taxa)
+anova(m, test = "Chisq")
 
 #did they test other taxa
 ggplot(data) + geom_freqpoly(aes(other.taxa))
@@ -154,21 +164,31 @@ anova(m1, test="Chisq")
 qplot(device, data=data, xlab="device")
 
 #in full color
-ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
-  xlab("Hypothesis") + 
+ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + xlab("Hypothesis") + 
+  ylab("Frequency") +
+  scale_fill_brewer(name="Device")
+
+ggplot(data, aes(year)) + geom_bar(mapping = aes(fill= device), stat = "count") + xlab("Hypothesis") + 
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
 
 #in grey
-ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
-  xlab("Hypothesis") + 
-  ylab("Frequency") +
-  scale_fill_grey(name= "Device", start = 0.5, end = .9) + theme_bw()
+#ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count") + 
+  #xlab("Hypothesis") + 
+  #ylab("Frequency") +
+  #scale_fill_grey(name= "Device", start = 0.5, end = .9) + theme_bw()
 
 device<-data %>% group_by(device) %>% count(device)
 device
 c<-chisq.test(device$nn, simulate.p.value = TRUE, B = 10000)
 c
+
+#device by year
+device<-data %>% group_by(year, device) %>% count(device)
+device
+
+m <- glm(nn~device %in% year, family = "poisson", data = device)
+anova(m, test = "Chisq")
 
 ```
 

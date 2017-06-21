@@ -168,7 +168,7 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count"
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
 
-ggplot(data, aes(year)) + geom_bar(mapping = aes(fill= device), stat = "count") + xlab("Hypothesis") + 
+ggplot(data, aes(year)) + geom_bar(mapping = aes(fill= device), stat = "count") + xlab("Year") + 
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
 

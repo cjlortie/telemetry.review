@@ -168,6 +168,12 @@ ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= device), stat = "count"
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
 
+#ggplot(data, aes(main.H)) + geom_bar(mapping = aes(fill= as.character(year)), stat #= "count") + xlab("Hypothesis") + 
+  #ylab("Frequency") +
+  #scale_fill_discrete(name="Device") +
+  #facet_grid(~device) +
+  #coord_flip()
+
 ggplot(data, aes(year)) + geom_bar(mapping = aes(fill= device), stat = "count") + xlab("Year") + 
   ylab("Frequency") +
   scale_fill_brewer(name="Device")
